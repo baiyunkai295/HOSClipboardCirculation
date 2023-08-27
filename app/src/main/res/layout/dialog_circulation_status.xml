@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<top.coolcha.hos.service.clipboard.custom.ReverseLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_dialog_circulation"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:orientation="horizontal"
+    android:alpha="0.6"
+    tools:ignore="MissingDefaultResource">
+
+    <ImageView
+        android:id="@+id/iv_dialog_circulation_open"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/ic_background_dialog_circle"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_circulation" />
+
+    <top.coolcha.hos.service.clipboard.custom.StatusView
+        android:id="@+id/iv_dialog_circulation_status"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
+
+</top.coolcha.hos.service.clipboard.custom.ReverseLinearLayout>

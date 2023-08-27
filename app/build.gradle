@@ -1,0 +1,85 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'top.coolcha.hos.service.clipboard'
+    compileSdk 32
+
+    defaultConfig {
+        applicationId "top.coolcha.hos.service.clipboard"
+        minSdk 31
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+
+    def keyStore = new KeyStore()
+    signingConfigs {
+        coolcha {
+            storeFile keyStore.keystore_file
+            keyAlias keyStore.keystore_alias
+            keyPassword keyStore.keystore_alias_password
+            storePassword keyStore.keystore_password
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            if (keyStore.checkKeyStore()) {
+                signingConfig signingConfigs.coolcha
+            }
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            if (keyStore.checkKeyStore()) {
+                signingConfig signingConfigs.coolcha
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    viewBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+
+}
+
+class KeyStore {
+    def keystore_file
+    def keystore_alias
+    def keystore_alias_password
+    def keystore_password
+
+    KeyStore() {
+        def localfile = new File('local.properties')
+        if (localfile != null && localfile.exists()) {
+            Properties properties = new Properties()
+            InputStream inputStream = localfile.newDataInputStream()
+            properties.load(inputStream)
+            def keystore_path = properties.getProperty('keystore.path')
+            if (keystore_path != null) {
+                keystore_file = new File(keystore_path)
+            }
+            keystore_alias = properties.getProperty('keystore.alias')
+            keystore_alias_password = properties.getProperty('keystore.alias_password')
+            keystore_password = properties.getProperty('keystore.password')
+        }
+    }
+
+    boolean checkKeyStore() {
+        return keystore_file != null && keystore_file.exists() && keystore_alias != null &&
+                keystore_alias_password != null && keystore_password != null
+    }
+}
